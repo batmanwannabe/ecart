@@ -133,6 +133,7 @@ var users = require('./routes/users.js');
 var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories.js');
 var adminProducts = require('./routes/admin_products.js');
+var search = require('./routes/search.js');
 
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
@@ -141,6 +142,7 @@ app.use('/products', products);
 app.use('/cart', cart);
 app.use('/users', users);
 app.use('/', pages);
+app.use('/search', search);
 
 // Start the server
 var port = 3000;

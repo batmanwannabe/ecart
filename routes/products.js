@@ -83,6 +83,24 @@ router.get('/:category/:product', function (req, res) {
 
 });
 
+/*
+ * search products
+ */
+router.get('/search', function (req, res) {
+
+    var keyWord = req.query.q;
+    
+    Product.find({slug: new RegExp(keyWord, 'i')}, function(err,products){
+        if(err)
+            console.log(err);
+        res.render('cat_products',{
+            title: 'test',
+            products: products
+        });
+    });  
+
+});
+
 // Exports
 module.exports = router;
 

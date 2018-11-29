@@ -40,6 +40,19 @@
                         <% } %>
                         <% }); %>
                     </ul>
+                    <ul class="nav navbar-nav">
+
+                    </ul>
+                    <div class="col-sm-3 col-md-3 navbar-right">
+                        <form class="navbar-form" role="search" method="get" action="/search/query">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search products" name="q">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="/cart/checkout">My Cart (
@@ -48,7 +61,7 @@
                                 <% } else {%>
                                 0
                                 <% } %>
-                            )</a>
+                                )</a>
                         </li>
                         <% if (user) { %>
                         <li><a href="/users/logout">Hi, <%= user.username %> ( logout )</a></li>
@@ -59,7 +72,7 @@
                         <% if (user && user.admin == 1) { %>
                         <li><a href="/admin/pages">Admin Area</a></li>
                         <% }%>
-                        
+
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -67,29 +80,29 @@
 
         <div class="container">
             <%- messages('messages', locals) %>
-            
+
             <% if (errors) {%>
-                <% errors.forEach(function(error) { %>
-                <div class="alert alert-danger">
-                    <%= error.msg %>
-                </div>
-                <% });%>
+            <% errors.forEach(function(error) { %>
+            <div class="alert alert-danger">
+                <%= error.msg %>
+            </div>
+            <% });%>
             <% }%>
-    
+
             <div class="row">
                 <div class="col-xs-12 col-md-3">
                     <h3>Categories</h3>
                     <ul class="list-group">
                         <li class="list-group-item"><a href="/products">All products</a></li>
                         <% categories.forEach(function(c){ %>
-                            <li class="list-group-item"><a href="/products/<%= c.slug %>"><%= c.title %></a></li>
+                        <li class="list-group-item"><a href="/products/<%= c.slug %>"><%= c.title %></a></li>
                         <% }); %>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-1"></div>
                 <div class="col-xs-12 col-md-8">
-                    
-                
+
+
 
 
 

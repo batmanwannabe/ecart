@@ -56,14 +56,16 @@ router.get('/add/:product', function (req, res) {
  * GET checkout page
  */
 router.get('/checkout', function (req, res) {
-
+    
+    var isLoggedIn = req.isAuthenticated() ? true : false ;
     if (req.session.cart && req.session.cart.length == 0) {
         delete req.session.cart;
         res.redirect('/cart/checkout');
     } else {
         res.render('checkout', {
             title: 'Checkout',
-            cart: req.session.cart
+            cart: req.session.cart,
+            isLoggedIn: isLoggedIn
         });
     }
 
