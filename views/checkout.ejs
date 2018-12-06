@@ -6,7 +6,7 @@
 <br><br>
 
 <table class="table table-striped alignmiddle">
-    
+
     <tr>
         <th>Image</th>
         <th>Title</th>
@@ -15,7 +15,7 @@
         <th></th>
         <th>Subtotal</th>
     </tr>
-    
+
     <% var total = 0; %>
     <% cart.forEach(function(product){ %>
     <% var sub = parseFloat(product.qty * product.price).toFixed(2) %>
@@ -28,21 +28,42 @@
         <td>
             <a href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
             <a href="/cart/update/<%= product.title %>?action=remove">-</a>&nbsp;
-            <a href="/cart/update/<%= product.title %>?action=clear">Clear</a>&nbsp;
         </td>
         <td>$<%= sub %></td>
     </tr>
-    <% }); %>
+    <% }); %>  
+    <% if (total > 1000) { %>
+    <% if(cart[0].title == "becoming-by-michelle-obama" || cart[0].title == "fantastic-beasts:-the-crimes-of-grindelwald" || cart[0].title == "nine-perfect-strangers" || cart[0].title == "churchill:-walking-with-destiny-" || cart[0].title == "the-hive-queen-(wings-of-fire,-book-12)-"){ %>
+    <tr>
+        <td colspan="6" align="right"><b>Total: </b> $<%= parseFloat(total).toFixed(2) %> (Discount: 10%)</td>
+    </tr>
+    <% } else { %>
     <tr>
         <td colspan="6" align="right"><b>Total: </b> $<%= parseFloat(total).toFixed(2) %></td>
     </tr>
+    <% } %>
+     <% } else {%>
+     <% if(cart[0].title == "becoming-by-michelle-obama"){ %>
+     <tr>
+        <td colspan="6" align="right"><b>Delivery: </b> $100</td>
+    </tr>
+    <tr>
+        <td colspan="6" align="right"><b>Total + Delivery: </b> $<%= (parseFloat(total+100).toFixed(2) ) %> (Discount: 10%)</td>
+    </tr>
+    <% } else { %>
+    <tr>
+        <td colspan="6" align="right"><b>Total + Delivery: </b> $<%= (parseFloat(total+100).toFixed(2) ) %></td>
+    </tr>
+    <% } %>
+    <% } %>
+
     <tr>
         <td colspan="5" align="right">
             <a class="clearcart btn btn-danger" href="/cart/clear">Clear cart</a>
         </td>
         <% if(isLoggedIn) { %>
         <td colspan="5" align="right">
-            <a class="btn btn-primary buynow" href="#">Buy now</a>
+            <a class="btn btn-primary buynow" href="/cart/buynow/">Buy now</a>
         </td>
         <% }else {%>
         <td colspan="5" align="right">
@@ -50,7 +71,7 @@
         </td>
         <% } %>
     </tr>
-    
+
 </table>
 
 
@@ -60,15 +81,15 @@
 <% } %>
 
 <script>
-    
-$(function() {
-   
-    $('a.clearcart').on('click', function () {
-        if (!confirm('Confirm clear cart'))
-            return false;
-    });      
-});
-    
+
+    $(function () {
+
+        $('a.clearcart').on('click', function () {
+            if (!confirm('Confirm clear cart'))
+                return false;
+        });
+    });
+
 </script>
 
 <% include _layouts/footer %>

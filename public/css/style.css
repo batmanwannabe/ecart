@@ -1,5 +1,5 @@
 img.pimage {
-    width: 150px;
+    width: 125px;
 }
 
 a.pa {
@@ -56,4 +56,15 @@ table.alignmiddle td {
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1;
+}
+
+.rating-block{
+	background-color:#FAFAFA;
+	border:1px solid #EFEFEF;
+	padding:15px 15px 20px 15px;
+	border-radius:3px;
+}
+
+.checked {
+    color: orange;
 }

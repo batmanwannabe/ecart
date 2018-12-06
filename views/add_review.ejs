@@ -1,0 +1,23 @@
+<% include _layouts/header %>
+
+
+<h2 class="page-title">Add Review</h2>
+<a href="/orders/myorders" class="btn btn-primary">Back to Orders</a>
+<br><br>
+
+<form method="post" action="/orders/add-review">
+
+    <div class="form-group">
+        <label for="">Rating(Give a number from 1 to 5)</label>
+        <input type="text" class="form-control" name="rating" placeholder="Rating(Give a number from 1 to 5)">
+    </div>
+    <div class="form-group">
+        <label for="">Review</label>
+        <input type="text" class="form-control" name="content" placeholder="Review">
+    </div>   
+    <input type="hidden"  name="slug" value="<%= slug %>">
+
+    <button class="btn btn-default">Submit</button>
+</form>
+
+<% include _layouts/footer %>

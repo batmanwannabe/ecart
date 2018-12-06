@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 // Product Schema
 var ProductSchema = mongoose.Schema({
-   
+
     title: {
         type: String,
         required: true
@@ -24,8 +24,15 @@ var ProductSchema = mongoose.Schema({
     },
     image: {
         type: String
-    }
-    
+    },
+    avgrating: {
+        type: Number
+    },
+    review: [{
+            rating: Number,
+            content: String,
+            username: String}]
+
 });
 
 var Product = module.exports = mongoose.model('Product', ProductSchema);

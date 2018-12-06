@@ -121,6 +121,7 @@ app.use(passport.session());
 
 app.get('*', function(req,res,next) {
    res.locals.cart = req.session.cart;
+   res.locals.wishlist = req.session.wishlist;
    res.locals.user = req.user || null;
    next();
 });
@@ -134,6 +135,10 @@ var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories.js');
 var adminProducts = require('./routes/admin_products.js');
 var search = require('./routes/search.js');
+var deals = require('./routes/deals.js');
+var orders = require('./routes/orders.js');
+var wishlist = require('./routes/wishlist.js');
+var notification = require('./routes/notification.js');
 
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
@@ -143,6 +148,10 @@ app.use('/cart', cart);
 app.use('/users', users);
 app.use('/', pages);
 app.use('/search', search);
+app.use('/deals', deals);
+app.use('/orders', orders);
+app.use('/wishlist', wishlist);
+app.use('/notification', notification);
 
 // Start the server
 var port = 3000;

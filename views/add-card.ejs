@@ -1,0 +1,32 @@
+<% include _layouts/header %>
+
+
+<h2 class="page-title">Add a Card</h2>
+<a href="/users/profile" class="btn btn-primary">Back to profile</a>
+<br><br>
+
+<form method="post" action="/users/add-card">
+
+    <div class="form-group">
+        <label for="">Name on Card</label>
+        <input type="text" class="form-control" name="name" placeholder="Name">
+    </div>
+    <div class="form-group">
+        <label for="">Card Number</label>
+        <input type="text" class="form-control" name="number" placeholder="Card Number">
+    </div>
+    
+    <div class="form-group">
+        <label for="">Expiration Month</label>
+        <input type="text" class="form-control" name="expmonth" placeholder="MM">
+    </div>
+    <div class="form-group">
+        <label for="">Expiration Year</label>
+        <input type="text" class="form-control" name="expyear" placeholder="YY">
+    </div>
+    
+
+    <button class="btn btn-default">Submit</button>
+</form>
+
+<% include _layouts/footer %>

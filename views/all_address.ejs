@@ -1,0 +1,19 @@
+<% include _layouts/header %>
+<h3>All Addresses</h3>
+<div class="row">
+    
+    <% addresses.forEach(function(p){ %>
+    <br><br>
+    <div class="col-4">
+        <h4>Address line 1: <%= p.address %></h4>
+        <h4>City: <%= p.city %></h4>
+        <h4>State: <%= p.state %></h4>
+        <h4>Zipcode: <%= p.zipcode %></h4>
+        <h4>Phone: <%= p.phone %></h4>
+        <a class="vd" href="/users/edit-address/<%= p._id %>">Edit Address</a>
+    </div>
+    <% }); %>
+
+</div>
+
+<% include _layouts/footer %>

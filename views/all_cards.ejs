@@ -1,0 +1,22 @@
+<% include _layouts/header %>
+
+<div class="row">
+    <% if(typeof cards === "undefined" || cards.length ==0){ %>
+    <h3>No Cards saved</h3>
+    <% } else{ %>
+    <h3>All Cards</h3>
+    <% cards.forEach(function(p){ %>
+    <br><br>
+    <div class="col-4">
+        <h4>Name on Card: <%= p.name %></h4>
+        <h4>Number: <%= p.number %></h4>
+        <h4>Expiry Month: <%= p.expmonth %></h4>
+        <h4>Expiry Year: <%= p.expyear %></h4>
+        <a class="vd" href="/users/delete-card/<%= p._id %>">Delete Card</a>
+    </div>
+    <% }); %>
+    <% }%>
+
+</div>
+
+<% include _layouts/footer %>

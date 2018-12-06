@@ -9,6 +9,12 @@ var CategorySchema = mongoose.Schema({
     },
     slug: {
         type: String
+    },
+    discount: {
+        type: Boolean
+    },
+    discountrate: {
+        type: Number
     }
     
 });

@@ -1,0 +1,19 @@
+<% include _layouts/header %>
+
+<% if(notifications.length === 0){ %>
+
+<h3>No notifications</h3>
+<% }else { %>
+<h3>Notifications</h3>
+<div class="row">
+    
+    <% notifications.forEach(function(p){ %>
+    <br><br>
+    <div class="col-4">
+        <h4><%= p %></h4>
+    </div>
+    <% }); %>
+
+</div>
+<% } %>
+<% include _layouts/footer %>

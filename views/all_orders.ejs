@@ -1,0 +1,73 @@
+<% include _layouts/header %>
+<% if(orders === 'undefined' || orders.length ==0){ %>
+<h1 class="page-title">No Orders are found </h1>
+<br><br>
+<% }else{ %>
+<h1 class="page-title">My Orders</h1>
+<br><br>
+<input class="form-control" id="myInput" type="text" placeholder="Filter by order status..">
+<br><br>
+<% for(var i=0; i < orders.length;i++){ %>
+
+<table class="table table-striped alignmiddle" id='myTable'>
+    <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+
+    <% orders[i].cartItems.forEach(function(product){ %>
+
+    <tr>
+        <td><img class="cpi" src="<%= product.image %>" alt=""></td>
+        <td><%= product.title %></td>
+        <td><%= product.quantity %></td>
+        <td><%= product.status %></td>
+        <td>$<%= product.price %></td>
+        <% if(product.status == "delivered") {%>
+        <td><b>Delivered on:</b><%= product.deliverydate %></td>
+        <% var d1 = new Date();%>
+        <% var d2 = new Date(product.deliverydate);%>
+        <% var timeDiff = Math.abs(d1.getTime() - d2.getTime());%>
+        <% var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); %>
+        <% if( diffDays <=30){ %>
+        <td><a href="/orders/addreview/<%= product.title %>">Add Review</a></td>
+        <% } %>
+        <% if( diffDays <=10){ %>
+        <td><a href="/orders/return/<%= orders[i]._id %>/<%= product.title %>">Return Order</a></td>
+        <% } %>
+        <% } %>
+        <% if(product.status == "open") {%>
+        <td><a href="/orders/cancel/<%= orders[i]._id %>/<%= product.title %>">Cancel Order</a></td>
+        <% } %>
+        
+    </tr>    
+    <% }); %>
+</table>
+
+<% } %>
+<% } %>
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+</script>
+
+<% include _layouts/footer %>
