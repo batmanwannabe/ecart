@@ -10,14 +10,17 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
         <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     </head>
 
     <body>        
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
+                    <span style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776; </span>
                     <a class="navbar-brand" href="/">EKart</a>
+                    
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -65,31 +68,35 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/products">All products</a>
+            <a href="/deals/deals">Today's Deals!</a>
+            <br>
+            <h3>Categories:</h3>
+            <% categories.forEach(function(c){ %>
+            <a href="/products/<%= c.slug %>"><%= c.title %></a>
+        <% }); %>   
+    </div>
+    <div class="container">
+        <%- messages('messages', locals) %>
 
-        <div class="container">
-            <%- messages('messages', locals) %>
+        <% if (errors) {%>
+        <% errors.forEach(function(error) { %>
+        <div class="alert alert-danger">
+            <%= error.msg %>
+        </div>
+        <% });%>
+        <% }%>
 
-            <% if (errors) {%>
-            <% errors.forEach(function(error) { %>
-            <div class="alert alert-danger">
-                <%= error.msg %>
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+
+                
+                
             </div>
-            <% });%>
-            <% }%>
-
-            <div class="row">
-                <div class="col-xs-12 col-md-3">
-                    <h3>Categories</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="/products">All products</a></li>
-                        <li class="list-group-item"><a href="/deals/deals">Today's Deals!<a></li>
-                                    <% categories.forEach(function(c){ %>
-                                    <li class="list-group-item"><a href="/products/<%= c.slug %>"><%= c.title %></a></li>
-                                    <% }); %>                        
-                                    </ul>
-                                    </div>
-                                    <div class="col-xs-12 col-md-1"></div>
-                                    <div class="col-xs-12 col-md-8">
+            <div class="col-xs-12 col-md-1"></div>
+            <div class="col-xs-12 col-md-8">
 
 
 
