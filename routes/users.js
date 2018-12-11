@@ -193,6 +193,13 @@ router.post('/add-card', function (req, res) {
     req.checkBody('number', ' Card Number is required').notEmpty();
     req.checkBody('expmonth', 'Card Expiry month is required').notEmpty();
     req.checkBody('expyear', 'Card Expiry Year is required').notEmpty();
+    req.checkBody('number', ' Card Number should be a number').isDecimal();
+    req.checkBody('expmonth', 'Card Expiry month should be a number').isDecimal();
+    req.checkBody('expyear', 'Card Expiry Year should be a number').isDecimal();
+    req.checkBody('number', ' Card Number should be a 16 digit number').matches(/^\w{16,16}$/);
+    req.checkBody('expmonth', 'Card Expiry month should be a 2 digit number').matches(/^\w{2,2}$/);
+    req.checkBody('expyear', 'Card Expiry Year should be a 4 digit number').matches(/^\w{4,4}$/);
+
 
     var errors = req.validationErrors();
 
@@ -377,8 +384,16 @@ router.post('/edit-address', function (req, res) {
 
     if (errors) {
         console.log(errors);
-        req.flash('error', 'inputs does not meet requirements!');
-        res.redirect('/users/profile');
+        Address.findById(req.body.id, function (err, p) {
+            User.findOne({username: req.user.username}, function (err, user) {
+                res.render('edit-address', {
+                    title: 'edit address',
+                    address: p,
+                    errors: errors,
+                    user: user
+                });
+            });
+        });
     } else {
         var addresss = req.body.address;
         var city = req.body.city;
@@ -423,7 +438,7 @@ router.post('/edit-profile', function (req, res) {
 
     req.checkBody('name', 'Name should nt contain numbers/spl chars!').matches(/^[_A-z]*((-|\s)*[_A-z])*$/, 'i');
     req.checkBody('password', 'Password is required!').notEmpty();
-    req.checkBody('password', 'Password does not meet requirements!').matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{1,}$/, "i");
+    req.checkBody('password', 'Password should contain at least an uppercase and a lowercase character, a number and a special character!').matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{1,}$/, "i");
     //req.checkBody('password2', 'Passwords do not match!').equals(password);
     var name = req.body.name;
     var password = req.body.password;
@@ -435,8 +450,15 @@ router.post('/edit-profile', function (req, res) {
 
     if (errors) {
         console.log(errors);
-        req.flash('error', 'Password doe not meet requirements!');
-        res.redirect('/users/edit-profile');
+        User.findOne({username: req.user.username}, function (err, user) {
+            if (err)
+                console.log(err);
+            res.render('edit-profile', {
+                title: 'edit profile',
+                user: user,
+                errors: errors
+            });
+        });
     } else {
         User.findOne({username: req.body.username}, function (err, user) {
             if (err)

@@ -290,6 +290,38 @@ router.post('/buynow', function (req, res) {
         req.checkBody('number', ' Card Number is required').notEmpty();
         req.checkBody('expmonth', 'Card Expiry month is required').notEmpty();
         req.checkBody('expyear', 'Card Expiry Year is required').notEmpty();
+        req.checkBody('number', ' Card Number should be a number').isDecimal();
+        req.checkBody('expmonth', 'Card Expiry month should be a number').isDecimal();
+        req.checkBody('expyear', 'Card Expiry Year should be a number').isDecimal();
+        req.checkBody('number', ' Card Number should be a 16 digit number').matches(/^\w{16,16}$/);
+        req.checkBody('expmonth', 'Card Expiry month should be a 2 digit number').matches(/^\w{2,2}$/);
+        req.checkBody('expyear', 'Card Expiry Year should be a 4 digit number').matches(/^\w{4,4}$/);
+
+        var month = req.body.expmonth;
+        var year = req.body.expyear;
+        console.log(month);
+
+        var expiryDate = new Date(year.toString() + '-' + month.toString() + '-01');
+        console.log(expiryDate);
+        if (expiryDate < new Date()) {
+
+            Addresses.find({username: req.user.username}, function (err, addresses) {
+                Cards.find({username: req.user.username}, function (err, cards) {
+                    User.findOne({username: req.user.username}, function (err, user) {
+                        res.render('placeorder', {
+                            title: 'Place Order',
+                            cart: req.session.cart,
+                            cards: cards,
+                            addresses: addresses,
+                            user: user
+                        });
+                    });
+
+                });
+            });
+        }
+
+        //req.checkBody('expmonth' + '/' + 'expyear', 'Card Expired').matches(/^((0[1-9])|(1[0-2]))\/((18)|([1-2][0-9]))$/, 'i');
     }
     if (req.body.addresss == 'newaddress')
     {
@@ -328,7 +360,8 @@ router.post('/buynow', function (req, res) {
         var image = "";
         var sub = 0;
         var total = 0;
-        console.log(req.user.username);
+        //console.log(req.user.username);
+
         if (req.isAuthenticated()) {
             username = req.user.username;
             var cart = new Cart({

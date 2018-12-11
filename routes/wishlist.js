@@ -107,7 +107,7 @@ router.get('/remove/:product', function (req, res) {
                 req.flash('error', 'Product not in wishlist');
                 res.redirect('back');
                 return;
-                
+
 
             } else {
                 Wishlist.findById(list._id, function (err, wlist) {
@@ -115,7 +115,7 @@ router.get('/remove/:product', function (req, res) {
                     wlist.items.forEach(function (e) {
                         prod.push(e);
                     });
-                   
+
                     prod.splice(ifExists, 1);
 
                     wlist.items = prod;
@@ -144,16 +144,24 @@ router.get('/products', function (req, res) {
 
     Wishlist.findOne({username: res.locals.user.username}, function (err, list) {
 
-
-        Product.find({title: {$in: list.items}}, function (err, products) {
-            if (err)
-                console.log(err);
-
+        if (list === null) {
             res.render('cat_products', {
                 title: "wishlists",
-                products: products
+                products: null
             });
-        });
+
+        } else {
+            Product.find({title: {$in: list.items}}, function (err, products) {
+                if (err)
+                    console.log(err);
+
+                res.render('cat_products', {
+                    title: "wishlists",
+                    products: products
+                });
+            });
+        }
+
 
 
     });

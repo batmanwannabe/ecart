@@ -1,7 +1,7 @@
 <% include _layouts/header %>
-<% if(products.length === 0) { %>
+<% if(products == null || products.length === 0) { %>
 <h2> No products found </h2>
-<% }%>
+<% } else {%>
 <div class="row products">
     <% if(typeof deal !== 'undefined') {%>
     <h2><%= deal %></h2>
@@ -20,5 +20,5 @@
     <% }); %>
 
 </div>
-
+<% } %>
 <% include _layouts/footer %>
